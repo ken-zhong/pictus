@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/1.7.16/fabric.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="/stylesheets/show.css">
+  </head>
+
+
+  <body>
+    <canvas id="draw" width="1920px" height="1080px"></canvas>
+    <div class="control-box">
+      <button class="control-button" id="brush-black" onclick="changeBrushColor('black')"></button>
+      <button class="control-button" id="brush-red" onclick="changeBrushColor('red')"></button>
+      <button class="control-button" id="brush-green" onclick="changeBrushColor('green')"></button>
+      <button class="control-button" id="brush-blue" onclick="changeBrushColor('blue')"></button>
+      <button class="control-button" id="brush-orange" onclick="changeBrushColor('orange')"></button>
+      <button class="control-button" id="brush-eraser" onclick="changeToEraser()"><span class="glyphicon glyphicon-erase" aria-hidden="true"></span></button>
+      <button class="control-button" onclick="drawMode()">Draw</button>
+      <div class="btn-group dropup">
+        <button type="button" class="dropdown-toggle control-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <span class="caret"></span>
+          <span class="sr-only">Toggle Dropdown</span>
+        </button>
+        <ul class="dropdown-menu">
+          <li><button class="control-button" id="brush-black" onclick="changeBrushColor('black')"></button></li>
+          <li><button class="control-button" id="brush-black" onclick="changeBrushColor('black')"></button></li>
+        </ul>
+      </div>
+      <button class="control-button pull-right" id="brush-eraser" onclick="resetCanvas()"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+    </div>
+
+  </body>
+
+  <script src="/whiteboard-client.js"></script>
+
+</html>

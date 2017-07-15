@@ -1,0 +1,26 @@
+{
+  "name": "virtual-tabletop",
+  "version": "1.0.0",
+  "description": "A realtime whiteboard for collaborative work and play!",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ken Zhong",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "connect-flash": "^0.1.1",
+    "ejs": "^2.5.6",
+    "express": "^4.15.3",
+    "express-session": "^1.15.3",
+    "method-override": "^2.3.9",
+    "mongodb": "^2.6.12",
+    "mongoose": "^4.11.1",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0",
+    "passport-local-mongoose": "^4.0.0",
+    "shortid": "^2.2.8",
+    "socket.io": "^2.0.3"
+  }
+}

@@ -1,0 +1,63 @@
+body, html {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  /*overflow: hidden;*/
+
+
+}
+
+#draw{
+  cursor: url("circle-64.png") 32 32, pointer;
+}
+
+.control-box{
+  position: fixed;
+  bottom: 0px;
+  left: 50%;
+  margin-left: -300px;
+
+  border-radius: 15px;
+
+  background: rgba(211, 211, 211, 0.5);
+  width: 600px;
+  height: 50px;
+
+}
+
+.control-button{
+  margin: 5px 0px 5px 0px;
+  height: 40px;
+  min-width: 35px;
+  border-radius: 10px;
+  outline: none;
+
+  vertical-align: middle;
+}
+
+
+
+.glyphicon{
+  font-size: 18px;
+}
+
+#brush-black{
+  background: black;
+}
+
+#brush-red{
+  background: red;
+}
+
+#brush-green{
+  background: green;
+}
+
+#brush-blue{
+  background: blue;
+}
+
+#brush-orange{
+  background: orange;
+}
