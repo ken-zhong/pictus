@@ -33,5 +33,4 @@ module.exports.loadWhiteboard = function(sio, newSocket){
         });
         
     });
-
 };

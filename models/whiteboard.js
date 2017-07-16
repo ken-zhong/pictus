@@ -8,13 +8,14 @@ var WhiteboardSchema = new mongoose.Schema({
         "default": shortid.generate
     },
     savedCanvas: {type: String, default: '{"objects":[]}'},
-    onwer: {
-        id: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "User"
-        },
-        username: String
-    }
+    created: {type:  Date, default: Date.now}
+    // owner: {
+    //     id: {
+    //         type: mongoose.Schema.Types.ObjectId,
+    //         ref: "User"
+    //     },
+    //     username: String
+    // }
 });
 
 module.exports = mongoose.model("Whiteboard", WhiteboardSchema);

@@ -3,13 +3,13 @@ var express                 = require("express"),
     mongoose                = require("mongoose"),
     passport                = require("passport"),
     LocalStrategy           = require("passport-local"),
-    flash                   = require("connect-flash"),
     passportLocalMongoose   = require("passport-local-mongoose"),
+    flash                   = require("connect-flash"),
     methodOverride          = require("method-override"),
-    whiteboardServer        = require("./whiteboardServer"),
     User                    = require("./models/user"),
     Whiteboard              = require("./models/whiteboard"),
-    settings                = require("settings.json")
+    whiteboardServer        = require("./whiteboardServer"),
+    settings                = require("settings.json"),
     
     app                     = express(),
     server                  = require("http").Server(app),
@@ -43,28 +43,46 @@ app.use(function(req, res, next){
     next();
 });
 
+
 // ROUTES BELOW
 app.get("/", function(req, res){
+    if(req.isAuthenticated()){
+        return res.render("home");
+    }
     res.render("landing");
+});
+
+app.get("/home", isLoggedIn, function(req, res){
+    res.render("home");
 });
 
 app.get("/about", function(req, res){
     res.render("about");
 });
 
+app.get("/join", function(req, res){
+    res.render("join");
+});
+
+app.post("/join", function(req, res){
+    res.redirect("/boards/" + req.body.boardId);
+});
+
 app.get("/boards/:id", function(req, res){
     Whiteboard.findById(req.params.id, function(err, foundWhiteboard){
         if(err || !foundWhiteboard){
             console.log(err);
-            res.redirect("/")
+            req.flash("error", "Oops, that board could not be found!");
+            res.redirect("/join");
         } else {
             // console.log(foundWhiteboard)
-            res.render("show", {whiteboard: foundWhiteboard})
+            res.render("show", {whiteboard: foundWhiteboard});
         }
-    })
-})
+    });
+});
 
-// LOGIN / LOGOUT ROUTES
+
+// AUTEHENTICATION ROUTES
 app.get("/login", function(req, res){
     res.render("login");
 });
@@ -82,7 +100,6 @@ app.get("/logout", function(req, res){
     res.redirect("/");
 });
 
-// SIGNUP ROUTE
 app.get("/register", function(req, res){
     res.render("register");
 });
@@ -103,13 +120,22 @@ app.post("/register", function(req, res){
 });
 
 app.get("/*", function(req, res){
+    // req.flash("error", "Oops, that page could not be found!")
     res.redirect("/");
-})
+});
 
 io.on("connection", function(socket){
     whiteboardServer.loadWhiteboard(io, socket);
-})
+});
+
+function isLoggedIn(req, res, next){
+    if(req.isAuthenticated()){
+        return next();
+    }
+    req.flash("error", "You need to be logged in to view that!");
+    res.redirect('/login');
+}
 
 server.listen(settings.port, function(){
-    console.log("listening on " + settings.port);
+    console.log("listening on " + process.env.PORT);
 });
