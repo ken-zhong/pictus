@@ -29,11 +29,7 @@
 	        <span class="icon-bar"></span>
 	        <span class="icon-bar"></span>
       	</button>
-	  		<% if(!currentUser){ %>
-				<a href="/" class="navbar-brand">PICTUS beta</a>
-			<% } else { %>
-				<a href="/home" class="navbar-brand">PICTUS beta</a>
-			<% } %>
+			<a href="/" class="navbar-brand">PICTUS beta</a>
 	</div>
 	<div class="collapse navbar-collapse" id="bs-navbar-top">
 		<ul class ="nav navbar-nav">
@@ -44,7 +40,7 @@
 				<li><a href="/login">Login</a></li>
 				<li><a href="/register">Sign Up</a></li>
 			<% } else { %>
-				<li><a href="/#" class="welcome-message">Welcome, <%= currentUser.username %></a></li>
+				<li><a href="/#" class="welcome-message">You are signed in as: <%= currentUser.username %></a></li>
 				<li><a href="/logout">Logout</a></li>
 			<% } %>
 		</ul>

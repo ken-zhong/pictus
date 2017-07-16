@@ -7,7 +7,7 @@ var UserSchema = new mongoose.Schema({
     password: String,
     boards: [
         {
-            type: mongoose.Schema.Types.ObjectId,
+            type: mongoose.Schema.Types.ObjectId, 
             ref: "Whiteboard"
         }    
     ]

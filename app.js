@@ -47,13 +47,17 @@ app.use(function(req, res, next){
 // ROUTES BELOW
 app.get("/", function(req, res){
     if(req.isAuthenticated()){
-        return res.render("home");
+        User.findById(req.user.id).populate("boards").exec(function(err, foundUser){
+            if(err){
+                res.send(err);
+            } else {
+                res.render("home", {user: foundUser});
+            }
+        });
+        
+    } else {
+        res.render("landing");
     }
-    res.render("landing");
-});
-
-app.get("/home", isLoggedIn, function(req, res){
-    res.render("home");
 });
 
 app.get("/about", function(req, res){
@@ -68,16 +72,47 @@ app.post("/join", function(req, res){
     res.redirect("/boards/" + req.body.boardId);
 });
 
+// whiteboard CREATE, SHOW, and DELETE routes below: 
+app.post("/boards", isLoggedIn, function(req, res){
+    User.findById(req.user._id, function(err, foundUser){
+        if(err){
+            req.flash("error", err);
+            res.redirect("/");
+        } else {
+            Whiteboard.create({}, function(err, newBoard){
+                if(err){
+                    req.flash("error", err);
+                    res.redirect("/");
+                } else {
+                    newBoard.author.id = req.user._id;
+                    newBoard.author.username = req.user.username;
+                    newBoard.save();
+                    console.log(newBoard);
+                    foundUser.boards.unshift(newBoard);
+                    foundUser.save();
+                    res.redirect("/boards/" + newBoard.shortId);
+                }           
+            });
+        }
+    });
+});
+
 app.get("/boards/:id", function(req, res){
-    Whiteboard.findById(req.params.id, function(err, foundWhiteboard){
-        if(err || !foundWhiteboard){
-            console.log(err);
+    Whiteboard.findOne({"shortId": req.params.id}, function(err, foundWhiteboard){
+        if(!foundWhiteboard || err){
+            // console.log(err);
             req.flash("error", "Oops, that board could not be found!");
             res.redirect("/join");
         } else {
-            // console.log(foundWhiteboard)
             res.render("show", {whiteboard: foundWhiteboard});
         }
+    });
+});
+
+app.delete("/boards/:id", checkBoardOwnership, function(req, res){
+    Whiteboard.findByIdAndRemove(req.params.id, function(err){
+        req.flash("success", "You have deleted that whiteboard");
+        res.redirect("/");
     });
 });
 
@@ -134,6 +169,27 @@ function isLoggedIn(req, res, next){
     }
     req.flash("error", "You need to be logged in to view that!");
     res.redirect('/login');
+}
+
+function checkBoardOwnership(req, res, next){
+    if(req.isAuthenticated()){
+        Whiteboard.findById(req.params.id, function(err, foundWhiteboard){
+            if(err){
+                req.flash("error", err);
+                res.redirect("back");
+            } else {
+                if(foundWhiteboard.author.id.equals(req.user._id)){
+                    next();
+                } else {
+                    req.flash('error', 'You don\'t have permission to do that!');
+                    res.redirect("back");
+                }
+            }
+        });
+    } else {
+        req.flash('error', 'You need to be logged in to do that!');
+        res.redirect("back");        
+    }
 }
 
 server.listen(settings.port, function(){

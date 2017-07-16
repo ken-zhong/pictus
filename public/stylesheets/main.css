@@ -18,3 +18,7 @@ h1{
 .welcome-message{
 	cursor: default;
 }
+
+.paragraph-content p{
+	font-size: 22px;
+}

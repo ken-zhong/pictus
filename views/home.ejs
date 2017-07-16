@@ -2,12 +2,38 @@
 
 <div class="container">
     <div class="jumbotron">
-        <h1>Under Construction!</h1>
+        <h1>Welcome to Pictus!</h1>
+        <br>
+        <form class="text-center" action="/boards" method="post">
+            <button class="btn btn-primary btn-lg">Create a new board</button>
+        </form>
+        <br>
+        <div class="text-center">
+            <a class="btn btn-primary btn-lg" href="/join">Join a board</a>
+        </div>
     </div>
-    
-    
-    
-</div>
 
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <h2>Your existing boards:</h2>
+            <hr>
+            
+            <% user.boards.forEach(function(whiteboard){ %>
+                <div class="panel panel-primary">
+                    <div class="panel-body">
+                        <a class="btn btn-success" href="/boards/<%=whiteboard.shortId%>">Join!</a>
+                        <span>   Board ID: <strong><%= whiteboard.shortId %></strong> -  Created on: <%= whiteboard.created.toDateString() %></span>
+                        <form class="pull-right" action="/boards/<%= whiteboard._id%>?_method=DELETE" method="post">
+                            <button class="btn btn-danger">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            <% }) %>
+            
+        </div>
+    </div>    
+   
+
+</div>
 
 <% include partials/footer %>

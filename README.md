@@ -1,4 +1,4 @@
-# Virtual Tabletop v 0.2
+# Virtual Tabletop v 0.3
 
 A realtime whiteboard for tabletop games!
 
@@ -8,8 +8,10 @@ Completed:
 * show page 
 * join routes 
 * basic draw functionality 
+* user dashboard
+* create and destroy routes
 
 Still to do:
 * about page 
-* user dashboard that shows associated whiteboards 
-* general whiteboard functionality 
+* general UI improvements
+* general whiteboard functionality improvements

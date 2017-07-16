@@ -11,7 +11,7 @@ module.exports.loadWhiteboard = function(sio, newSocket){
     socket.on("room", function(room){
        console.log(room);
        socket.join(room);
-       Whiteboard.findById(room, function(err, whiteboard){
+       Whiteboard.findOne({"shortId": room}, function(err, whiteboard){
             if(err){
                 console.log(err);
             } else {
@@ -24,13 +24,25 @@ module.exports.loadWhiteboard = function(sio, newSocket){
         var room = data.room;
         var boardState = data.JSON;
         
-        Whiteboard.findByIdAndUpdate(room, {savedCanvas: boardState}, function(err, board){
-            if(err || !board){
+        //update the board for everyone else connected to the same room
+        io.sockets.in(room).emit('boardState', boardState);
+        
+        //update the stored canvas in the database
+        Whiteboard.findOne({"shortId": room}, function(err, whiteboard){
+            if(err){
                 console.log(err);
             } else {
-                io.sockets.in(room).emit('boardState', boardState);
-            }
+                whiteboard.savedCanvas = boardState;
+                whiteboard.save();
+            }        
         });
         
+        // Whiteboard.findByIdAndUpdate(room, {savedCanvas: boardState}, function(err, board){
+        //     if(err || !board){
+        //         console.log(err);
+        //     } else {
+        //         io.sockets.in(room).emit('boardState', boardState);
+        //     }
+        // });
     });
 };
