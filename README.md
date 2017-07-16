@@ -1,6 +1,6 @@
-# Virtual Tabletop v 0.3
+# Pictus v 0.3
 
-A realtime whiteboard for tabletop games!
+A realtime whiteboard for collaborative work and play
 
 Completed: 
 * Registration and login routes 
