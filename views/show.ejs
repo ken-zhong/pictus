@@ -14,7 +14,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="/stylesheets/show.css">
   </head>
 
@@ -27,8 +27,9 @@
       <button class="control-button" id="brush-green" onclick="changeBrushColor('green')"></button>
       <button class="control-button" id="brush-blue" onclick="changeBrushColor('blue')"></button>
       <button class="control-button" id="brush-orange" onclick="changeBrushColor('orange')"></button>
+      <button class="control-button" id="brush-purple" onclick="changeBrushColor('purple')"></button>
       <button class="control-button" id="brush-eraser" onclick="changeToEraser()"><span class="glyphicon glyphicon-erase" aria-hidden="true"></span></button>
-      <button class="control-button" onclick="drawMode()">Draw</button>
+      <!--<button class="control-button" onclick="drawMode()">Draw</button>-->
       <div class="btn-group dropup">
         <button type="button" class="dropdown-toggle control-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <span class="caret"></span>

@@ -5,12 +5,11 @@ body, html {
   padding: 0;
   /*overflow: hidden;*/
 
-
 }
 
-#draw{
-  cursor: url("circle-64.png") 32 32, pointer;
-}
+/*#draw{*/
+/*  cursor: url("circle-64.png") 32 32, pointer;*/
+/*}*/
 
 .control-box{
   position: fixed;
@@ -32,11 +31,8 @@ body, html {
   min-width: 35px;
   border-radius: 10px;
   outline: none;
-
   vertical-align: middle;
 }
-
-
 
 .glyphicon{
   font-size: 18px;
@@ -60,4 +56,8 @@ body, html {
 
 #brush-orange{
   background: orange;
+}
+
+#brush-purple{
+  background: purple;
 }
