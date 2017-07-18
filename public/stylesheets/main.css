@@ -22,3 +22,7 @@ h1{
 .paragraph-content p{
 	font-size: 22px;
 }
+
+#credits-text p{
+	font-size: 14px;
+}

@@ -20,3 +20,4 @@ Still to do:
 * general whiteboard functionality improvements
 * security?
 * deploy on a platform other than c9
+* proper mobile support

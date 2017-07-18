@@ -38,6 +38,12 @@ body, html {
   font-size: 18px;
 }
 
+.modal{
+  margin-top: 25%;
+}
+
+
+
 #brush-black{
   background: black;
 }
@@ -60,4 +66,16 @@ body, html {
 
 #brush-purple{
   background: purple;
+}
+
+#brush-gray{
+  background: gray;
+}
+
+#brush-teal{
+  background: teal;
+}
+
+#brush-pink{
+  background: pink;
 }
