@@ -6,9 +6,6 @@ var canvas = new fabric.Canvas("draw");
 var socket = io();
 var boardId = window.location.pathname.slice(8);
 
-canvas.set("isDrawingMode", "true");
-canvas.freeDrawingBrush.width = 1;
-
 // this implementation of setting global false and turning select true on objects is 
 // glitching with our socket loading; each refresh resets the true/false of object selection
 //fabric.Object.prototype.selectable = false;
@@ -17,6 +14,8 @@ var app = {
     init: function(){
       this.initSockets();
       this.initListeners();
+      canvas.set("isDrawingMode", "true");
+      canvas.freeDrawingBrush.width = 1;
     },
     
     initSockets: function(){
@@ -71,7 +70,15 @@ var app = {
           $('#tokenName').val('');
           sendCanvas();
         });
-        
+
+        $('#textCreate').on('click', function(){
+          var text = $('#newText').val();
+          var size = $('input[name=textSizeRadio]:checked').val();
+          createText(text, size);
+          $('#newText').val('');
+          sendCanvas();
+        });
+
         $('.color-btn').each(function(){
           $(this).on('click', function(){
             var color = $(this).val();
@@ -105,8 +112,7 @@ function sendCanvas(){
 }
 
 function updateCanvas(newCanvas){
-  canvas.loadFromJSON(newCanvas);
-  refreshCanvas();
+  canvas.loadFromJSON(newCanvas, refreshCanvas) //pass refreshCanvas in so that it runs after the load
 }
 
 function refreshCanvas(){
@@ -118,7 +124,7 @@ function refreshCanvas(){
     } else {
       canvas.bringToFront(element);
     }
-  });  
+  });
 }
 
 function resetCanvas(){
@@ -210,6 +216,14 @@ function createText(newText, size = 16){
     top: 150
   });
   canvas.add(text);
+}
+
+function createImage(url){
+  fabric.Image.fromURL(url, function(newImage){
+    canvas.add(newImage);
+    sendCanvas();
+  });
+  refreshCanvas();
 }
 
 app.init();

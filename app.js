@@ -9,7 +9,7 @@ var express                 = require("express"),
     User                    = require("./models/user"),
     Whiteboard              = require("./models/whiteboard"),
     whiteboardServer        = require("./whiteboardServer"),
-    settings                = require("settings.json"),    
+    settings                = require("settings.json"),        
     app                     = express(),
     server                  = require("http").Server(app),
     io                      = require("socket.io")(server);
@@ -70,7 +70,8 @@ app.post("/join", function(req, res){
   res.redirect("/boards/" + req.body.boardId);
 });
 
-// whiteboard CREATE, SHOW, and DELETE routes below: 
+// ==========================================================
+// whiteboard CREATE, SHOW, UPDATE, and DESTROY routes below: 
 app.post("/boards", isLoggedIn, function(req, res){
   User.findById(req.user._id, function(err, foundUser){
     if(err){
@@ -84,8 +85,11 @@ app.post("/boards", isLoggedIn, function(req, res){
         } else {
           newBoard.author.id = req.user._id;
           newBoard.author.username = req.user.username;
-          if(req.body.newBoardName.length === 0){ newBoard.name = "new board"}
-          else { newBoard.name = req.body.newBoardName; }
+          if(req.body.newBoardName.length === 0){ 
+            newBoard.name = "new board";
+          } else { 
+            newBoard.name = req.body.newBoardName; 
+          }
           newBoard.save();
 
           foundUser.boards.unshift(newBoard);
@@ -109,6 +113,18 @@ app.get("/boards/:id", function(req, res){
   });
 });
 
+//THIS REFS TO OBJECT ID, NOT SHORTID
+app.put("/boards/:id", checkBoardOwnership, function(req, res){
+  var newName = {
+    name: req.body.newBoardName
+  };
+  Whiteboard.findByIdAndUpdate(req.params.id, newName, function(err, success){
+    req.flash("success", "You have renamed that whiteboard");
+    res.redirect("/");
+  });
+});
+
+//THIS REFS TO OBJECT ID, NOT SHORTID
 app.delete("/boards/:id", checkBoardOwnership, function(req, res){
   Whiteboard.findByIdAndRemove(req.params.id, function(err){
     req.flash("success", "You have deleted that whiteboard");
@@ -117,7 +133,7 @@ app.delete("/boards/:id", checkBoardOwnership, function(req, res){
 });
 
 
-// AUTEHENTICATION ROUTES
+// AUTEHENTICATION ROUTES ===========================+==========
 app.get("/login", function(req, res){
   res.render("login");
 });
@@ -154,7 +170,6 @@ app.post("/register", function(req, res){
 });
 
 app.get("/*", function(req, res){
-  // req.flash("error", "Oops, that page could not be found!")
   res.redirect("/");
 });
 
@@ -192,5 +207,5 @@ function checkBoardOwnership(req, res, next){
 }
 
 server.listen(settings.port, function(){
-  console.log("listening on " + settings.port;
+  console.log("listening on " + settings.port);
 });

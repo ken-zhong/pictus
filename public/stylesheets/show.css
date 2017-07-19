@@ -43,7 +43,9 @@ body, html {
   margin-top: 25%;
 }
 
-
+.drop-btn{
+  width: 100%;
+}
 
 #brush-black{
   background: black;

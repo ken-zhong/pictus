@@ -21,8 +21,7 @@
     
     <title>Pictus</title>
   </head>
-
-
+  
   <body>
     <canvas id="draw" width="1920px" height="1080px"></canvas>
     
@@ -48,7 +47,8 @@
         <ul class="dropdown-menu">
           <li>add stuff here</li>
           <li>add stuff here</li>
-          <li><button class="btn btn-default" id="clear-paths-btn">Clear free drawings</button></li>
+          <li><button class="btn btn-default drop-btn" type="button" data-toggle="modal" data-target="#textModal">Add Text</button></li>
+          <li><button class="btn btn-default drop-btn" id="clear-paths-btn">Clear free drawings</button></li>
         </ul>
       </div>
       <button class="control-btn pull-right" id="reset-canvas-btn"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
@@ -72,9 +72,9 @@
               <option value="blue" >blue</option>
               <option value="orange" >orange</option>
               <option value="gray" >gray</option>
-              <option value="pink" >pink</option>
               <option value="teal" >teal</option>
               <option value="gold" >gold</option>
+              <option value="pink" >pink</option>
             </select>
           </div>
           <div class="modal-footer">
@@ -85,7 +85,29 @@
       </div>
     </div>
 
-
+    <!-- Text creation modal -->
+    <div class="modal fade" id="textModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Add text</h4>
+          </div>
+          <div class="modal-body form-inline text-center">
+            <input type="text" name="initials" placeholder="add text" id="newText" class="form-control">
+            <form class="form-group form-control">
+              <input type="radio" name="textSizeRadio" value="18"> small </input>
+              <input type="radio" name="textSizeRadio" value="26" checked> medium </input>
+              <input type="radio" name="textSizeRadio" value="38"> large </input>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-primary" id="textCreate" data-dismiss="modal">Add Text</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
 
   <script src="/whiteboardClient.js"></script>

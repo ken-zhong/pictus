@@ -1,9 +1,11 @@
-# Pictus v 0.4
+# Pictus v 0.5
 
 A realtime whiteboard for collaborative work and play
 
 Last update:
+* Added editable names to whiteboards
 * added dragable tokens to whiteboard functionality
+* added text insertion to whiteboard functionality
 
 Completed: 
 * Registration and login routes
@@ -16,6 +18,7 @@ Completed:
 * create and destroy routes
 
 Still to do:
+* better way to get boardId
 * general UI improvements
 * general whiteboard functionality improvements
 * security?
