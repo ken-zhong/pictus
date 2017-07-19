@@ -15,6 +15,10 @@ var WhiteboardSchema = new mongoose.Schema({
         },
         username: String
     },
+    name: {
+        type: String,
+        "default": "New Canvas"
+    }
 });
 
 module.exports = mongoose.model("Whiteboard", WhiteboardSchema);

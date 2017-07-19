@@ -18,7 +18,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-        
     
     <title>Pictus</title>
   </head>
@@ -28,20 +27,20 @@
     <canvas id="draw" width="1920px" height="1080px"></canvas>
     
     <div class="control-box">
-      <button class="control-button" type="button" id="brush-black" onclick="changeBrushColor('black')"></button>
-      <button class="control-button" type="button" id="brush-red" onclick="changeBrushColor('red')"></button>
-      <button class="control-button" type="button" id="brush-green" onclick="changeBrushColor('green')"></button>
-      <button class="control-button" type="button" id="brush-blue" onclick="changeBrushColor('blue')"></button>
-      <button class="control-button" type="button" id="brush-orange" onclick="changeBrushColor('orange')"></button>
-      <button class="control-button" type="button" id="brush-purple" onclick="changeBrushColor('purple')"></button>
-      <button class="control-button" type="button" id="brush-gray" onclick="changeBrushColor('gray')"></button>
-      <button class="control-button" type="button" id="brush-teal" onclick="changeBrushColor('teal')"></button>
-      <button class="control-button" type="button" id="brush-pink" onclick="changeBrushColor('pink')"></button>
-      <button class="control-button" type="button" id="brush-eraser" onclick="changeToEraser()"><span class="glyphicon glyphicon-erase" aria-hidden="true"></span></button>
-      <button class="control-button" type="button" onclick="drawMode()">Draw</button>
-      <button class="control-button" type="button" data-toggle="modal" data-target="#tokenModal">Token</button>
+      <button class="control-btn color-btn" type="button" value="black" id="brush-black"></button>
+      <button class="control-btn color-btn" type="button" value="red" id="brush-red"></button>
+      <button class="control-btn color-btn" type="button" value="green" id="brush-green"></button>
+      <button class="control-btn color-btn" type="button" value="blue" id="brush-blue" ></button>
+      <button class="control-btn color-btn" type="button" value="orange" id="brush-orange"></button>
+      <button class="control-btn color-btn" type="button" value="purple" id="brush-purple"></button>
+      <button class="control-btn color-btn" type="button" value="gray" id="brush-gray"></button>
+      <button class="control-btn color-btn" type="button" value="teal" id="brush-teal"></button>
+      <button class="control-btn color-btn" type="button" value="pink" id="brush-pink"></button>
+      <button class="control-btn" type="button" id="brush-eraser-btn"><span class="glyphicon glyphicon-erase" aria-hidden="true"></span></button>
+      <button class="control-btn" type="button" id="draw-mode-btn">Draw</button>
+      <button class="control-btn" type="button" data-toggle="modal" data-target="#tokenModal">Token</button>
       <div class="btn-group dropup">
-        <button type="button" class="dropdown-toggle control-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <button type="button" class="dropdown-toggle control-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
           <span class="caret"></span>
           <span class="sr-only">Toggle Dropdown</span>
@@ -49,10 +48,10 @@
         <ul class="dropdown-menu">
           <li>add stuff here</li>
           <li>add stuff here</li>
-          <li><button class="btn btn-default" onclick="clearPaths()">Clear free drawings</button></li>
+          <li><button class="btn btn-default" id="clear-paths-btn">Clear free drawings</button></li>
         </ul>
       </div>
-      <button class="control-button pull-right" id="brush-eraser" onclick="resetCanvas()"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+      <button class="control-btn pull-right" id="reset-canvas-btn"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
     </div>
 
     <!-- Token creation modal -->
@@ -77,7 +76,6 @@
               <option value="teal" >teal</option>
               <option value="gold" >gold</option>
             </select>
-            
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
@@ -87,8 +85,8 @@
       </div>
     </div>
 
+
   </body>
 
-  <script src="/whiteboard-client.js"></script>
-
+  <script src="/whiteboardClient.js"></script>
 </html>

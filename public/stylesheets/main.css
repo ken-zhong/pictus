@@ -23,6 +23,10 @@ h1{
 	font-size: 22px;
 }
 
+.modal{
+	margin-top: 10%;
+}
+
 #credits-text p{
 	font-size: 14px;
 }

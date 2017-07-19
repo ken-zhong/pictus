@@ -3,12 +3,10 @@
 <div class="container">
     <div class="jumbotron">
         <h1>Welcome to Pictus!</h1>
-        <br>
-        <form class="text-center" action="/boards" method="post">
-            <button class="btn btn-primary btn-lg">Create a new board</button>
-        </form>
-        <br>
+        <hr>
         <div class="text-center">
+            <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#newBoardModal">Create a new board</button>
+            <hr>
             <a class="btn btn-primary btn-lg" href="/join">Join a board</a>
         </div>
     </div>
@@ -17,23 +15,59 @@
         <div class="col-md-8 col-md-offset-2">
             <h2>Your existing boards:</h2>
             <hr>
-            
             <% user.boards.forEach(function(whiteboard){ %>
                 <div class="panel panel-primary">
                     <div class="panel-body">
                         <a class="btn btn-success" href="/boards/<%=whiteboard.shortId%>">Join!</a>
-                        <span>   Board ID: <strong><%= whiteboard.shortId %></strong> -  Created on: <%= whiteboard.created.toDateString() %></span>
+                        <strong>Name: </strong> <%= whiteboard.name %>
+                        <strong> | ID: </strong><%= whiteboard.shortId %>
+                        <strong> | </strong>
+                        Created on: <%= whiteboard.created.toDateString() %>
                         <form class="pull-right" action="/boards/<%= whiteboard._id%>?_method=DELETE" method="post">
                             <button class="btn btn-danger">Delete</button>
                         </form>
                     </div>
                 </div>
             <% }) %>
-            
         </div>
     </div>    
-   
-
 </div>
 
+    <div class="modal fade" id="newBoardModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Name your whiteboard:</h4>
+          </div>
+          <div class="modal-body">
+            <form class="text-center form-inline" action="/boards" method="post">
+                <div class="form-group">               
+                <input class="form-control" type="text" placeholder="name" name="newBoardName">
+                <input type="submit" class="btn btn-primary" value="New">
+                </div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--<div class="modal fade" id="editBoardModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">-->
+    <!--  <div class="modal-dialog modal-sm" role="document">-->
+    <!--    <div class="modal-content">-->
+    <!--      <div class="modal-header">-->
+    <!--        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>-->
+    <!--        <h4 class="modal-title" id="myModalLabel">Edit your whiteboard's name:</h4>-->
+    <!--      </div>-->
+    <!--      <div class="modal-body">-->
+    <!--        <form class="text-center" action="/boards" method="post" class="form-inline">-->
+    <!--            <input type="text" placeholder="name" name="newBoardName">-->
+    <!--            <input type="submit" class="btn btn-primary" value="Save">-->
+    <!--        </form>-->
+    <!--      </div>-->
+    <!--    </div>-->
+    <!--  </div>-->
+    <!--</div>-->
+    
 <% include partials/footer %>

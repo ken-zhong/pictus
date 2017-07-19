@@ -25,13 +25,14 @@ body, html {
 
 }
 
-.control-button{
+.control-btn{
   margin: 5px 0px 5px 0px;
   height: 40px;
   min-width: 35px;
   border-radius: 10px;
   outline: none;
   vertical-align: middle;
+  background: #f2f2f2;
 }
 
 .glyphicon{
