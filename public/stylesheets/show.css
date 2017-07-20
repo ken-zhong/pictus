@@ -7,20 +7,16 @@ body, html {
 
 }
 
-/*#draw{*/
-/*  cursor: url("circle-64.png") 32 32, pointer;*/
-/*}*/
-
 .control-box{
   position: fixed;
   bottom: 0px;
   left: 50%;
-  margin-left: -300px;
+  margin-left: -295px;
 
   border-radius: 15px;
 
   background: rgba(211, 211, 211, 0.5);
-  width: 600px;
+  width: 590;
   height: 50px;
 
 }

@@ -112,7 +112,9 @@ function sendCanvas(){
 }
 
 function updateCanvas(newCanvas){
-  canvas.loadFromJSON(newCanvas, refreshCanvas) //pass refreshCanvas in so that it runs after the load
+  //pass refreshCanvas in so that it runs after the load; 
+  //was giving me errors where it would refresh before the new canvas loads
+  canvas.loadFromJSON(newCanvas, refreshCanvas); 
 }
 
 function refreshCanvas(){
@@ -200,7 +202,7 @@ function randomCoordinates(xLimit, yLimit){
 }
 
 function clearPaths(){
-  // **BUG** why doesn't this work properly? Only removes some paths with each call
+  // **BUG** why doesn't this work properly? Only removes some paths with each call. Async issue I think
   canvas._objects.forEach(function(elem){
     if(elem.type === "path"){
       canvas.remove(elem);

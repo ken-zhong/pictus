@@ -9,7 +9,7 @@ var express                 = require("express"),
     User                    = require("./models/user"),
     Whiteboard              = require("./models/whiteboard"),
     whiteboardServer        = require("./whiteboardServer"),
-    settings                = require("settings.json"),        
+    settings                = require("./settings.json")
     app                     = express(),
     server                  = require("http").Server(app),
     io                      = require("socket.io")(server);
@@ -71,7 +71,7 @@ app.post("/join", function(req, res){
 });
 
 // ==========================================================
-// whiteboard CREATE, SHOW, UPDATE, and DESTROY routes below: 
+// whiteboard CREATE, SHOW, UPDATE, and DESTROY routes below:
 app.post("/boards", isLoggedIn, function(req, res){
   User.findById(req.user._id, function(err, foundUser){
     if(err){
@@ -85,17 +85,17 @@ app.post("/boards", isLoggedIn, function(req, res){
         } else {
           newBoard.author.id = req.user._id;
           newBoard.author.username = req.user.username;
-          if(req.body.newBoardName.length === 0){ 
+          if(req.body.newBoardName.length === 0){
             newBoard.name = "new board";
-          } else { 
-            newBoard.name = req.body.newBoardName; 
+          } else {
+            newBoard.name = req.body.newBoardName;
           }
           newBoard.save();
 
           foundUser.boards.unshift(newBoard);
           foundUser.save();
           res.redirect("/boards/" + newBoard.shortId);
-        }           
+        }
       });
     }
   });
@@ -202,7 +202,7 @@ function checkBoardOwnership(req, res, next){
     });
   } else {
     req.flash('error', 'You need to be logged in to do that!');
-    res.redirect("back");        
+    res.redirect("back");
   }
 }
 
