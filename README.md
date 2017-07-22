@@ -1,25 +1,15 @@
-# Pictus v 0.5
+# Pictus
+### v0.5
 
-A realtime whiteboard for collaborative work and play
+Pictus is a whiteboarding app that lets you and your collaborators draw and share on a canvas in realtime, as well as store them for later retrieval.
 
-Last update:
-* Added editable names to whiteboards
-* added dragable tokens to whiteboard functionality
-* added text insertion to whiteboard functionality
+The draw button toggles between free draw mode and item manipulation mode. Alternatively, hold down shift to manipulate items and objects on the canvas.
 
-Completed:
-* Registration and login routes
-* About routes, landing page
-* User Schema and MongoDB set up
-* show page
-* join routes
-* basic draw functionality 
-* user dashboard
-* create and destroy routes
+Delete objects and items by first selecting them and then pressing the 'delete' or 'backspace' key.
 
-Still to do:
-* better way to get boardId
-* general UI improvements
-* general whiteboard functionality improvements
-* deploy on a platform other than c9
-* proper mobile support
+Clear the canvas and reset it to a blank slate with the (X) button on the right side of the control dock.
+
+## The Tech Stack
+Pictus uses HTML5 Canvas to render the drawing area. A Node.js and Express server connects the different users via websockets to provide real time updates. A MongoDB database saves each canvas state and associates them with users.
+
+Other major libraries used: Socket.io, Fabric.js, Mongoose, Passport.js
