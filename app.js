@@ -14,7 +14,7 @@ var express                 = require("express"),
     server                  = require("http").Server(app),
     io                      = require("socket.io")(server);
 
-mongoose.connect("mongodb://localhost/whiteboard-app");
+mongoose.connect(settings.MongoURL);
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + "/public"));
