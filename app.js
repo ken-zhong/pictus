@@ -42,7 +42,6 @@ app.use(function(req, res, next){
   next();
 });
 
-
 // ROUTES BELOW
 app.get("/", function(req, res){
   if(req.isAuthenticated()){
