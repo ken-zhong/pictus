@@ -131,7 +131,6 @@ app.delete("/boards/:id", checkBoardOwnership, function(req, res){
   });
 });
 
-
 // AUTEHENTICATION ROUTES ===========================+==========
 app.get("/login", function(req, res){
   res.render("login");
