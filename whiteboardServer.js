@@ -21,8 +21,8 @@ module.exports.loadWhiteboard = function(sio, newSocket){
     });
     
     socket.on("update", function(data){
-        var room = data.room;
-        var boardState = data.JSON;
+        let room = data.room;
+        let boardState = data.JSON;
         
         //update the board for everyone else connected to the same room
         io.sockets.in(room).emit('boardState', boardState);
@@ -36,13 +36,5 @@ module.exports.loadWhiteboard = function(sio, newSocket){
                 whiteboard.save();
             }        
         });
-        
-        // Whiteboard.findByIdAndUpdate(room, {savedCanvas: boardState}, function(err, board){
-        //     if(err || !board){
-        //         console.log(err);
-        //     } else {
-        //         io.sockets.in(room).emit('boardState', boardState);
-        //     }
-        // });
     });
 };
