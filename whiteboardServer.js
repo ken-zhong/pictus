@@ -21,8 +21,8 @@ module.exports.loadWhiteboard = function(sio, newSocket){
     });
 
     socket.on("update", function(data){
-        let room = data.room;
-        let boardState = data.JSON;
+        var room = data.room;
+        var boardState = data.JSON;
 
         //update the board for everyone else connected to the same room
         io.sockets.in(room).emit('boardState', boardState);
