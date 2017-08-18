@@ -6,7 +6,6 @@ const socket = io();
 const boardId = window.location.pathname.slice(8);
 var canvas = new fabric.Canvas("draw");
 
-
 var app = {
     init: function(){
       this.initSockets();
@@ -19,15 +18,12 @@ var app = {
       socket.on('connect', function(){
         socket.emit('room', boardId);
       });
-
       socket.on('boardState', function(val){
         app.updateCanvas(val);
       });
-
       canvas.on('path:created', function(){
         app.sendCanvas();
       });
-
       canvas.on('object:modified', function(){
         app.sendCanvas();
       });
@@ -48,13 +44,11 @@ var app = {
             app.sendCanvas();
           }
         });
-
         $(document).on('keyup', function(event){
           if(event.which === 16){
             canvas.isDrawingMode = true;
           }
         });
-
         $('#tokenCreate').on('click', function(){
           let name = $('#tokenName').val();
           let color = $('#tokenColor').val();
@@ -62,7 +56,6 @@ var app = {
           $('#tokenName').val('');
           app.sendCanvas();
         });
-
         $('#textCreate').on('click', function(){
           let text = $('#newText').val();
           let size = $('input[name=textSizeRadio]:checked').val();
@@ -70,29 +63,21 @@ var app = {
           $('#newText').val('');
           app.sendCanvas();
         });
-
         $('.color-btn').each(function(){
           $(this).on('click', function(){
             let color = $(this).val();
             whiteboard.changeBrushColor(color);
           });
         });
-
         $('#brush-eraser-btn').on('click', function(){
           whiteboard.changeToEraser();
         });
-
         $('#draw-mode-btn').on('click', function(){
           whiteboard.drawMode();
         });
-
         $('#reset-canvas-btn').on('click', function(){
           app.resetCanvas();
         });
-
-        // $('#clear-paths-btn').on('click', function(){
-        //   clearPaths();
-        // });
     },
 
     sendCanvas: function(){
