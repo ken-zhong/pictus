@@ -3,7 +3,7 @@
 /* global $ */
 
 const socket = io();
-const boardId = window.location.pathname.slice(8);
+const BOARD_ID = window.location.pathname.slice(8);
 var canvas = new fabric.Canvas("draw");
 
 var app = {
@@ -16,7 +16,7 @@ var app = {
 
     initSockets: function(){
       socket.on('connect', function(){
-        socket.emit('room', boardId);
+        socket.emit('room', BOARD_ID);
       });
       socket.on('boardState', function(val){
         app.updateCanvas(val);
@@ -83,7 +83,7 @@ var app = {
     sendCanvas: function(){
       let newData = {};
       newData.JSON = app.saveCanvas();
-      newData.room = boardId;
+      newData.room = BOARD_ID;
       socket.emit('update', newData);
     },
 
