@@ -1,5 +1,5 @@
 # Pictus
-### v0.5
+### v0.6
 
 Pictus is a whiteboarding app that lets you and your collaborators draw and share on a canvas in realtime, as well as store them for later retrieval.
 
