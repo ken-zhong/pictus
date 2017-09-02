@@ -18,18 +18,33 @@ var app = {
       socket.on('connect', function(){
         socket.emit('room', BOARD_ID);
       });
+
       socket.on('boardState', function(val){
         app.updateCanvas(val);
       });
+      
+      socket.on('newPath', async function(val){
+        fabric.util.enlivenObjects([val], await function(newObj){
+          canvas.add(newObj[0]);
+        })
+        app.refreshCanvas();
+      })
+
       canvas.on('path:created', function(){
+        app.sendUpdate();
         app.sendCanvas();
       });
+
       canvas.on('object:modified', function(){
-        app.sendCanvas();
+        app.sendCanvas(true);
       });
     },
 
     initListeners: function(){
+        $(window).on('unload', function(){
+          app.sendCanvas();
+        })
+      
         $(document).on('keydown', function(event){
           // if user holds down shift key, they can select / move objects around on the canvas
           if(event.which === 16){
@@ -41,55 +56,76 @@ var app = {
           if(event.which === 8 || event.which === 46){
             let activeObject = canvas.getActiveObject();
             canvas.remove(activeObject);
-            app.sendCanvas();
+            app.sendCanvas(true);
           }
         });
+
         $(document).on('keyup', function(event){
           if(event.which === 16){
             canvas.isDrawingMode = true;
           }
         });
+
         $('#tokenCreate').on('click', function(){
           let name = $('#tokenName').val();
           let color = $('#tokenColor').val();
           whiteboard.createToken(name, color);
           $('#tokenName').val('');
-          app.sendCanvas();
+          app.sendCanvas(true);
         });
+
         $('#textCreate').on('click', function(){
           let text = $('#newText').val();
           let size = $('input[name=textSizeRadio]:checked').val();
           whiteboard.createText(text, size);
           $('#newText').val('');
-          app.sendCanvas();
+          app.sendCanvas(true);
         });
+
         $('.color-btn').each(function(){
           $(this).on('click', function(){
             let color = $(this).val();
             whiteboard.changeBrushColor(color);
           });
         });
+
         $('#brush-eraser-btn').on('click', function(){
           whiteboard.changeToEraser();
         });
+
         $('#draw-mode-btn').on('click', function(){
           whiteboard.drawMode();
         });
+
         $('#reset-canvas-btn').on('click', function(){
           app.resetCanvas();
         });
+
+        // $('#clear-paths-btn').on('click', function(){
+        //   clearPaths();
+        // });
     },
 
-    sendCanvas: function(){
+    // serializes the entire board and send to server
+    sendCanvas: function(refreshFlag = false){
       let newData = {};
       newData.JSON = app.saveCanvas();
       newData.room = BOARD_ID;
+      newData.refresh = refreshFlag;
       socket.emit('update', newData);
+    },
+    
+    // send only most recent update to board state
+    sendUpdate: function(){
+      let newData = {};
+      let lastIdx = canvas._objects.length - 1;
+      newData.newPath = canvas._objects[lastIdx];
+      newData.room = BOARD_ID;
+      socket.emit('newPath', newData);
     },
 
     updateCanvas: function(newCanvas){
       //pass refreshCanvas in so that it runs after the load;
-      //was giving me errors where it would refresh before the new canvas loads
       canvas.loadFromJSON(newCanvas, app.refreshCanvas);
     },
 
@@ -107,7 +143,7 @@ var app = {
 
     resetCanvas: function(){
       canvas.loadFromJSON('{"objects":[]}');
-      this.sendCanvas();
+      this.sendCanvas(true)
     },
 
     saveCanvas: function(){
@@ -191,7 +227,7 @@ var whiteboard = {
   createImage: function(url){
     fabric.Image.fromURL(url, function(newImage){
       canvas.add(newImage);
-      app.sendCanvas();
+      app.sendCanvas(true);
     });
     app.refreshCanvas();
   },
@@ -202,7 +238,7 @@ var whiteboard = {
         canvas.remove(elem);
       }
     });
-    app.sendCanvas();
+    app.sendCanvas(true);
   }
 };
 
