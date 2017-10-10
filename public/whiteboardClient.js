@@ -4,9 +4,9 @@
 
 const socket = io();
 const BOARD_ID = window.location.pathname.slice(8);
-var canvas = new fabric.Canvas("draw");
+const canvas = new fabric.Canvas("draw");
 
-var app = {
+const app = {
     init: function(){
       this.initSockets();
       this.initListeners();
@@ -15,28 +15,28 @@ var app = {
     },
 
     initSockets: function(){
-      socket.on('connect', function(){
+      socket.on('connect', () => {
         socket.emit('room', BOARD_ID);
       });
 
-      socket.on('boardState', function(val){
-        app.updateCanvas(val);
+      socket.on('boardState', (val) => {
+        this.updateCanvas(val);
       });
-      
-      socket.on('newPath', async function(val){
-        fabric.util.enlivenObjects([val], await function(newObj){
+
+      socket.on('newPath', (val) => {
+        fabric.util.enlivenObjects([val], (newObj) => {
           canvas.add(newObj[0]);
         })
-        app.refreshCanvas();
+        this.refreshCanvas();
       })
 
-      canvas.on('path:created', function(){
-        app.sendUpdate();
-        app.sendCanvas();
+      canvas.on('path:created', () => {
+        this.sendUpdate();
+        this.sendCanvas();
       });
 
-      canvas.on('object:modified', function(){
-        app.sendCanvas(true);
+      canvas.on('object:modified', () => {
+        this.sendCanvas(true);
       });
     },
 
@@ -44,7 +44,7 @@ var app = {
         $(window).on('unload', function(){
           app.sendCanvas();
         })
-      
+
         $(document).on('keydown', function(event){
           // if user holds down shift key, they can select / move objects around on the canvas
           if(event.which === 16){
@@ -114,7 +114,7 @@ var app = {
       newData.refresh = refreshFlag;
       socket.emit('update', newData);
     },
-    
+
     // send only most recent update to board state
     sendUpdate: function(){
       let newData = {};
@@ -151,7 +151,7 @@ var app = {
     }
 };
 
-var whiteboard = {
+const whiteboard = {
   drawMode: function(){
     canvas.isDrawingMode = !canvas.isDrawingMode;
     app.refreshCanvas();
@@ -242,4 +242,7 @@ var whiteboard = {
   }
 };
 
-app.init();
+
+$( () =>{
+    app.init();
+});
