@@ -7,7 +7,7 @@ var socket;
 module.exports.loadWhiteboard = function(sio, newSocket){
     io = sio;
     socket = newSocket;
-    
+
     socket.on("room", function(room){
        console.log(room);
        socket.join(room);
@@ -16,17 +16,17 @@ module.exports.loadWhiteboard = function(sio, newSocket){
                 console.log(err);
             } else {
                 io.sockets.in(room).emit('boardState', whiteboard.savedCanvas);
-            }        
+            }
        });
     });
 
     socket.on("update", function(data){
         var room = data.room;
         var boardState = data.JSON;
-        
-        //update the stored canvas in the database, check for flag to emit back board for deserialization
+
+        // update the stored canvas in the database, check for flag to emit back board for deserialization
         if(data.refresh){
-            io.sockets.to(room).emit('boardState', boardState); 
+            io.sockets.to(room).emit('boardState', boardState);
         }
         Whiteboard.findOne({"shortId": room}, function(err, whiteboard){
             if(err){
@@ -34,10 +34,10 @@ module.exports.loadWhiteboard = function(sio, newSocket){
             } else {
                 whiteboard.savedCanvas = boardState;
                 whiteboard.save();
-            }        
+            }
         });
     });
-    
+
     socket.on("newPath", function(data){
         var room = data.room;
         var newPath = data.newPath
