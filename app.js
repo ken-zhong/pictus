@@ -9,14 +9,14 @@ var express                 = require("express"),
     User                    = require("./models/user"),
     Whiteboard              = require("./models/whiteboard"),
     whiteboardServer        = require("./whiteboardServer"),
-    settings                = require("./settings.json")
+    settings                = require("./settings.json"),
     app                     = express(),
     server                  = require("http").Server(app),
     io                      = require("socket.io")(server);
 
-var indexRoutes             = require("./controllers/index")
-var authRoutes             = require("./controllers/auth")
-var whiteboardRoutes             = require("./controllers/whiteboard")
+var indexRoutes             = require("./controllers/index"),
+    authRoutes              = require("./controllers/auth"),
+    whiteboardRoutes        = require("./controllers/whiteboard");
 
 mongoose.connect("mongodb://localhost/whiteboard-app");
 
